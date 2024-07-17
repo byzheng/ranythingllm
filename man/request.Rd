@@ -4,7 +4,7 @@
 \alias{request}
 \title{Perform a request to TiddlyWiki WebServer}
 \usage{
-request(method, path = "/", query = list(), ...)
+request(method = "GET", path = "/", query = list(), ...)
 }
 \arguments{
 \item{method}{The method in the httr package, e.g. GET, POST}
