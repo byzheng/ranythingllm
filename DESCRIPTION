@@ -8,8 +8,7 @@ Description: 'Anything LLM' <https://useanything.com/> is the all-in-one Desktop
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://ranythingllm.bangyou.me/,
-    https://github.com/byzheng/ranythingllm
+URL: https://ranythingllm.bangyou.me/, https://github.com/byzheng/ranythingllm, https://byzheng.github.io/ranythingllm/
 BugReports: https://github.com/byzheng/ranythingllm/issues
 Imports:
    settings,
