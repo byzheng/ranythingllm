@@ -4,16 +4,16 @@
 \alias{request}
 \title{Perform a request to TiddlyWiki WebServer}
 \usage{
-request(method = "GET", path = "/", query = list(), ...)
+request(method = "GET", path = "/", body = NULL, query = list())
 }
 \arguments{
 \item{method}{The method in the httr package, e.g. GET, POST}
 
 \item{path}{The path of request}
 
-\item{query}{The query of request}
+\item{body}{the query body}
 
-\item{...}{Other arguments of request}
+\item{query}{The query of request}
 }
 \value{
 The contents of response

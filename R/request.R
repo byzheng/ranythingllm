@@ -6,13 +6,13 @@
 #' @param method The method in the httr package, e.g. GET, POST
 #' @param path The path of request
 #' @param query The query of request
-#' @param ... Other arguments of request
+#' @param body the query body
 #'
 #' @return The contents of response
 request <- function(method = "GET",
-                           path = '/',
-                           query = list(),
-                           ...) {
+                    path = '/',
+                    body = NULL,
+                    query = list()) {
     stopifnot(length(method) == 1)
     stopifnot(is.character(method))
     stopifnot(method %in% c("GET", "PUT", "POST", "DELETE"))
@@ -30,6 +30,13 @@ request <- function(method = "GET",
         httr2::req_url_path_append(path) |>
         httr2::req_method(method)
 
+    if (!is.null(body)) {
+        if (body$method == "req_body_multipart") {
+            req <- req |>
+                httr2::req_body_multipart(file = curl::form_file(body$file),
+                                          type = body$type)
+        }
+    }
     resp <- req |>
         httr2::req_auth_bearer_token(apikey) |>
         httr2::req_perform()
