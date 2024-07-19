@@ -31,7 +31,12 @@ request <- function(method = "GET",
         httr2::req_method(method)
 
     if (!is.null(body)) {
-        if (body$method == "req_body_multipart") {
+
+        if (is.null(body$method) && body$type == "application/json") {
+            body$type <- NULL
+            req <- req |>
+                httr2::req_body_json(data = body, auto_unbox = TRUE)
+        } else if (body$method == "req_body_multipart") {
             req <- req |>
                 httr2::req_body_multipart(file = curl::form_file(body$file),
                                           type = body$type)

@@ -2,3 +2,6 @@
 
 export(any_options)
 export(any_reset)
+export(document_remove)
+export(documents)
+export(documents_raw_text)

@@ -1,4 +1,9 @@
 # function related with workspace
-get_workspaces <- function() {
+workspaces <- function() {
     request(path = "workspaces")
 }
+
+workspace_add_embeddings <- function(slug, embeddings) {
+
+}
+

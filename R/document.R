@@ -1,16 +1,75 @@
 # function related with document
 
+#' List of all locally-stored documents in instance
+#'
+#' @return A list of all documents
+#' @export
 documents <- function() {
     request(path = "documents")
 }
+
+document <- function(name) {
+    stopifnot(length(name) == 1)
+    stopifnot(is.character(name))
+    request(method = "GET", path = file.path("document", name))
+}
+
 
 documents_upload <- function(file) {
     stopifnot(length(file) == 1)
     stopifnot(is.character(file))
     stopifnot(file.exists(file))
 
-    request(method = "PUT", path = "document/upload",
+    resp <- request(method = "POST", path = "document/upload",
             body = list(method = "req_body_multipart",
                         file = file,
                         type = "application/pdf"))
+    resp
+}
+
+
+
+#' Upload a file by specifying its raw text content and metadata values without having to upload a file.
+#'
+#' @param title file title
+#' @param text raw text of file
+#' @param ... other metadata with key and values
+#'
+#' @return The document metadata
+#' @export
+documents_raw_text <- function(title, text, ...) {
+    stopifnot(length(title) == 1)
+    stopifnot(is.character(title))
+    stopifnot(length(text) == 1)
+    stopifnot(is.character(text))
+    meta <- list(...)
+    if (sum(nchar(names(meta)) == 0) > 0) {
+        stop("All metadata should have a name.")
+    }
+    meta$title <- title
+    body <- list(textContent = text,
+                 metadata = meta,
+                type = "application/json")
+    resp <- request(method = "POST", path = "document/raw-text",
+                    body = body)
+    resp
+}
+
+
+#' Permanently remove documents from the system.
+#'
+#' @param names Array of document names to be removed permanently.
+#'
+#' @return TRUE if success
+#' @export
+document_remove <- function(names) {
+    stop("There is a bug in the Anything LLM API. Document cannot be removed at this stage")
+    stopifnot(is.vector(names))
+    stopifnot(sum(!is.character(names)) == 0)
+
+    body <- list(names = names,
+                 type = "application/json")
+    resp <- request(method = "DELETE", path = "system/remove-documents",
+                    body = body)
+    return(TRUE)
 }
