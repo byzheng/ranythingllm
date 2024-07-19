@@ -8,6 +8,12 @@ documents <- function() {
     request(path = "documents")
 }
 
+#' Get a single document by its unique AnythingLLM document name
+#'
+#' @param name Unique document name to find (name in /documents)
+#'
+#' @return A list for document
+#' @export
 document <- function(name) {
     stopifnot(length(name) == 1)
     stopifnot(is.character(name))
