@@ -1,5 +1,13 @@
 # function related with embeddings
 
+#' Add or remove documents from a workspace by its unique slug.
+#'
+#' @param slug Unique slug of workspace to find
+#' @param adds files to add
+#' @param deletes files to delete
+#'
+#' @return TRUE if embeddings updated
+#' @export
 embeddings <- function(slug, adds = NULL, deletes = NULL) {
     stopifnot(length(slug) == 1)
     stopifnot(is.character(slug))
