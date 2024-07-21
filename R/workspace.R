@@ -1,9 +1,93 @@
 # function related with workspace
+
+
+#' List all current workspaces
+#'
+#' @return A list of current workspaces
+#' @export
 workspaces <- function() {
-    request(path = "workspaces")
+    ws <- request(path = "workspaces")
+    ws
 }
 
-workspace_add_embeddings <- function(slug, embeddings) {
 
+#' Deletes a workspace by its slug.
+#'
+#' @param slug workspace slug
+#'
+#' @return A list for new workspace
+#' @export
+workspace_new <- function(slug) {
+    stopifnot(length(slug) == 1)
+    stopifnot(is.character(slug))
+
+    ws <- workspaces()
+    ws_check <- ws$workspaces |>
+        purrr::keep(function(x) x$slug == slug)
+    if (length(ws_check) == 0) {
+        stop("Cannot find workspace for ", slug)
+    }
+    path <- sprintf("/workspace/%s", slug)
+    ws <- request(method = "DELETE", path = path)
+    ws
 }
+
+
+#' reate a new workspace
+#'
+#' @param name workspace name
+#'
+#' @return A list for new workspace
+#' @export
+workspace_new <- function(name) {
+    stopifnot(length(name) == 1)
+    stopifnot(is.character(name))
+
+    ws <- workspaces()
+    ws_check <- ws$workspaces |>
+        purrr::keep(function(x) x$name == name)
+    if (length(ws_check) > 0) {
+        stop("Exist workspace for ", name)
+    }
+
+    body <- list(name = name,
+                 type = "application/json")
+    ws <- request(method = "POST", path = "workspace/new", body = body)
+    ws
+}
+
+w_add_embeddings <- function(slug, adds = NULL, deletes = NULL) {
+    stopifnot(length(slug) == 1)
+    stopifnot(is.character(slug))
+
+    if (is.null(adds) && is.null(deletes)) {
+        stop("One of adds and deletes should be specified")
+    }
+    body <- list(type = "application/json")
+    if (!is.null(adds)) {
+        stopifnot(is.vector(adds))
+        stopifnot(is.character(adds))
+        body$adds <- adds
+    }
+    if (!is.null(deletes)) {
+        stopifnot(is.vector(deletes))
+        stopifnot(is.character(deletes))
+        body$deletes <- deletes
+    }
+    path <- sprintf("workspace/%s/update-embeddings", slug)
+
+    resp <- request(method = "POST", path = path,
+                    body = body)
+    resp
+    # {
+    #     "adds": [
+    #         "custom-documents/my-pdf.pdf-hash.json"
+    #     ],
+    #     "deletes": [
+    #         "custom-documents/anythingllm.txt-hash.json"
+    #     ]
+    # }
+}
+
+
 

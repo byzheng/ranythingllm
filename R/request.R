@@ -44,10 +44,17 @@ request <- function(method = "GET",
     }
     resp <- req |>
         httr2::req_auth_bearer_token(apikey) |>
+        httr2::req_error(is_error = \(resp) FALSE) |>
         httr2::req_perform()
 
-    resp |>
+    status_code <- httr2::resp_status(resp)
+    content <- resp |>
         httr2::resp_body_json()
-
+    if (status_code != 200) {
+        message("Request is failed with code: ", status_code)
+        message(content$error)
+        stop("Failed request. Try again.")
+    }
+    content
 }
 
