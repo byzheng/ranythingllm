@@ -12,7 +12,8 @@
 [![](http://cranlogs.r-pkg.org/badges/last-month/ranythingllm?color=green)](https://cran.r-project.org/package=ranythingllm)
 [![](http://cranlogs.r-pkg.org/badges/last-week/ranythingllm?color=green)](https://cran.r-project.org/package=ranythingllm)
 
-[Anything LLM](https://useanything.com/) is The all-in-one Desktop & Docker AI application with full RAG and AI Agent capabilities. ranythingllm is a R interface of [Anything LLM](https://useanything.com/) 
+[Anything LLM](https://useanything.com/) is The all-in-one Desktop & Docker AI application with full RAG and AI Agent capabilities. ranythingllm is a R interface of [Anything LLM](https://useanything.com/) API.
+
 
 ## Installation
 
