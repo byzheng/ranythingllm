@@ -48,8 +48,13 @@ request <- function(method = "GET",
         httr2::req_perform()
 
     status_code <- httr2::resp_status(resp)
-    content <- resp |>
-        httr2::resp_body_json()
+    if (method != "DELETE") {
+        content <- resp |>
+            httr2::resp_body_json()
+    } else {
+        content <- resp |>
+            httr2::resp_body_string()
+    }
     if (status_code != 200) {
         message("Request is failed with code: ", status_code)
         message(content$error)

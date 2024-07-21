@@ -11,29 +11,21 @@ workspaces <- function() {
 }
 
 
-#' Deletes a workspace by its slug.
+#' Get a workspace by its unique slug.
 #'
 #' @param slug workspace slug
 #'
-#' @return A list for new workspace
+#' @return A list for workspace
 #' @export
-workspace_new <- function(slug) {
+workspace <- function(slug) {
     stopifnot(length(slug) == 1)
     stopifnot(is.character(slug))
-
-    ws <- workspaces()
-    ws_check <- ws$workspaces |>
-        purrr::keep(function(x) x$slug == slug)
-    if (length(ws_check) == 0) {
-        stop("Cannot find workspace for ", slug)
-    }
     path <- sprintf("/workspace/%s", slug)
-    ws <- request(method = "DELETE", path = path)
+    ws <- request(method = "GET", path = path)
     ws
 }
 
-
-#' reate a new workspace
+#' Create a new workspace
 #'
 #' @param name workspace name
 #'
@@ -55,6 +47,31 @@ workspace_new <- function(name) {
     ws <- request(method = "POST", path = "workspace/new", body = body)
     ws
 }
+
+
+
+
+#' Deletes a workspace by its slug.
+#'
+#' @param slug workspace slug
+#'
+#' @return OK if deleted
+#' @export
+workspace_delete <- function(slug) {
+    stopifnot(length(slug) == 1)
+    stopifnot(is.character(slug))
+
+    ws <- workspaces()
+    ws_check <- ws$workspaces |>
+        purrr::keep(function(x) x$slug == slug)
+    if (length(ws_check) == 0) {
+        stop("Cannot find workspace for ", slug)
+    }
+    path <- sprintf("/workspace/%s", slug)
+    ws <- request(method = "DELETE", path = path)
+    ws
+}
+
 
 w_add_embeddings <- function(slug, adds = NULL, deletes = NULL) {
     stopifnot(length(slug) == 1)
