@@ -14,5 +14,3 @@ is_test_anything <- function() {
     return(FALSE)
 }
 
-
-test_worksapce <- "ZyVtIHzadrRIdHYzhUnwwwoQlDvIupQb"

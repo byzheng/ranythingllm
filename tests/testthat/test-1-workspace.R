@@ -1,6 +1,9 @@
 test_that("document", {
     skip_if(!is_test_anything())
 
+
+    test_worksapce <- "ZyVtIHzasdfdsdrRIdHYzhUnwwwoQlDvIupQb"
+
     # Create workspace
     expect_error(ws <- workspace_new(1))
     expect_error(ws <- workspace_new(c("A", "B")))

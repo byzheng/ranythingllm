@@ -2,10 +2,12 @@
 
 export(any_options)
 export(any_reset)
+export(create_folder)
 export(document)
 export(document_remove)
 export(documents)
 export(documents_raw_text)
+export(move_files)
 export(workspace)
 export(workspace_delete)
 export(workspace_new)

@@ -18,6 +18,29 @@ test_that("document", {
     remove_name <- paste0("custom-documents/", new_name)
     rsp <- document_remove(remove_name)
     expect_equal(rsp, TRUE)
+
+    test_folder <- "test_folder"
+    #create_folder(test_folder)
+
+    # Move files
+    new_doc <- documents_raw_text(title, text, docAuthor = "Doc Author",
+                                  description = "This is a raw text",
+                                  docSource = "from test")
+    new_doc2 <- documents_raw_text(title, text, docAuthor = "Doc Author",
+                                  description = "This is a raw text",
+                                  docSource = "from test")
+    files <- c(paste0("custom-documents/raw-", tolower(title), "-", new_doc$documents[[1]]$id, ".json"),
+               paste0("custom-documents/raw-", tolower(title), "-", new_doc2$documents[[1]]$id, ".json"))
+
+    move_files(files, test_folder)
+
+    new_files <- file.path(test_folder, basename(files))
+    doc1 <- document(basename(new_files[1]))
+    expect_equal(doc1$document$name, basename(files[1]))
+    doc2 <- document(basename(new_files[2]))
+    expect_equal(doc2$document$name, basename(files[2]))
+    document_remove(new_files[1])
+    document_remove(new_files[2])
 })
 
 
