@@ -4,7 +4,7 @@
 \alias{request}
 \title{Perform a request to TiddlyWiki WebServer}
 \usage{
-request(method = "GET", path = "/", body = NULL, query = list())
+request(method = "GET", path = "/", body = NULL, auto_unbox = TRUE)
 }
 \arguments{
 \item{method}{The method in the httr package, e.g. GET, POST}
@@ -13,7 +13,7 @@ request(method = "GET", path = "/", body = NULL, query = list())
 
 \item{body}{the query body}
 
-\item{query}{The query of request}
+\item{auto_unbox}{whether auto unbox for json body}
 }
 \value{
 The contents of response

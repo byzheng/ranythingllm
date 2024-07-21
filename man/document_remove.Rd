@@ -13,5 +13,5 @@ document_remove(names)
 TRUE if success
 }
 \description{
-Permanently remove documents from the system.
+Folder name is required to remove a document
 }

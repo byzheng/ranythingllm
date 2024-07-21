@@ -21,18 +21,6 @@ document <- function(name) {
 }
 
 
-documents_upload <- function(file) {
-    stopifnot(length(file) == 1)
-    stopifnot(is.character(file))
-    stopifnot(file.exists(file))
-
-    resp <- request(method = "POST", path = "document/upload",
-            body = list(method = "req_body_multipart",
-                        file = file,
-                        type = "application/pdf"))
-    resp
-}
-
 
 
 #' Upload a file by specifying its raw text content and metadata values without having to upload a file.
@@ -64,18 +52,35 @@ documents_raw_text <- function(title, text, ...) {
 
 #' Permanently remove documents from the system.
 #'
+#' @description
+#' Folder name is required to remove a document
 #' @param names Array of document names to be removed permanently.
 #'
 #' @return TRUE if success
 #' @export
 document_remove <- function(names) {
-    stop("There is a bug in the Anything LLM API. Document cannot be removed at this stage")
+    #stop("There is a bug in the Anything LLM API. Document cannot be removed at this stage")
     stopifnot(is.vector(names))
     stopifnot(sum(!is.character(names)) == 0)
 
     body <- list(names = names,
                  type = "application/json")
     resp <- request(method = "DELETE", path = "system/remove-documents",
-                    body = body)
+                    body = body,
+                    auto_unbox = FALSE)
     return(TRUE)
 }
+
+
+documents_upload <- function(file) {
+    stopifnot(length(file) == 1)
+    stopifnot(is.character(file))
+    stopifnot(file.exists(file))
+
+    resp <- request(method = "POST", path = "document/upload",
+                    body = list(method = "req_body_multipart",
+                                file = file,
+                                type = "application/pdf"))
+    resp
+}
+
