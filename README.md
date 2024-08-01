@@ -22,3 +22,9 @@ Install the developing version from [Github](https://github.com/byzheng/rtiddlyw
 ```r
 devtools::install_github('byzheng/ranythingllm')
 ```
+## Usage
+
+Setup an environmental variable `ANYTHINGLLM_APIKEY` for Anything LLM API KEY.
+
+
+
